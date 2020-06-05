@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cat << EOF
+---
+addons:
+config_vars:
+default_process_types:
+EOF
