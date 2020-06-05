@@ -4,6 +4,10 @@ BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 
+echo "BUILD_DIR = $BUILD_DIR"
+echo "CACHE_DIR = $CACHE_DIR"
+echo "ENV_DIR = $ENV_DIR"
+
 echo "-----> Install dependency deb packages"
 apt-get update -qqy \
   && apt-get -qqy install libnss3 libnss3-tools libfontconfig1 wget ca-certificates apt-transport-https inotify-tools unzip \
@@ -22,12 +26,17 @@ cd $BUILD_DIR
 REV=775629
 wget -q -O chrome.zip https://commondatastorage.googleapis.com/chromium-browser-snapshots/Linux_x64/$REV/chrome-linux.zip \
   && unzip chrome.zip \
-  && rm chrome.zip \
-  && ln -s $PWD/chrome-linux/chrome /usr/bin/google-chrome-unstable
+  && rm chrome.zip
 
 echo "-----> Check chromium-linux version"
-google-chrome-unstable --version
+$PWD/chrome-linux/chrome --version
 
+echo "-----> Exporting PATH" | indent
+PROFILE_PATH="$BUILD_DIR/.profile.d/chrome.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="/app/chrome-linux:$PATH"' >> $PROFILE_PATH
+
+# ln -s $PWD/chrome-linux/chrome /usr/bin/google-chrome-unstable
 # cp start.sh /usr/bin/
 # cp import_cert.sh /usr/bin/
 # mkdir /data
