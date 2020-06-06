@@ -21,7 +21,8 @@ wget -q -O chrome.zip https://commondatastorage.googleapis.com/chromium-browser-
   && unzip chrome.zip \
   && rm chrome.zip
 echo "-----> Sizes:"
-ls -lhaSr
+cd chrome-linux
+ls -lhaSr 
 ls -lhaSr locales
 
 echo "-----> Check chromium-linux version"
