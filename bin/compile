@@ -22,19 +22,19 @@ wget -q -O chrome.zip https://commondatastorage.googleapis.com/chromium-browser-
   && rm chrome.zip \
 
 echo "-----> Check chromium-linux version"
-$CHROME_DIR/chrome-linux/chrome --version  && echo "-----> Chromium browser installed!"
+$CHROME_DIR/chrome-linux/chrome --version  && echo "-----> Chromium browser installed!" || echo "-----> Chromium browser Failed!"
 
 echo "-----> Folder occupation in CHROME_DIR:"
 cd $CHROME_DIR
-du -hs .[^.]* | sort -hr
+du -h $(ls -A) | sort -h
 
 echo "-----> Folder occupation in BUILD_DIR:"
 cd $BUILD_DIR
-du -hs .[^.]* | sort -hr
+du -h $(ls -A) | sort -h
 
 echo "-----> Folder occupation in CACHE_DIR:"
 cd $CACHE_DIR
-du -hs .[^.]* | sort -hr
+du -h $(ls -A) | sort -h
 
 # ln -s $PWD/chrome-linux/chrome /usr/bin/google-chrome-unstable
 # cp start.sh /usr/bin/
