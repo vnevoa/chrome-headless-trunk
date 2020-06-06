@@ -3,7 +3,7 @@
 BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
-CHROME_DIR="$BUILD_DIR/.no_meteor"
+CHROME_DIR="$BUILD_DIR/.extras"
 
 echo "-----> Dependencies warning: this installation depends on several debian packages which are installed via the apt-buildpack Aptfile."
 
@@ -19,14 +19,15 @@ cd $CHROME_DIR
 REV=775629
 wget -q -O chrome.zip https://commondatastorage.googleapis.com/chromium-browser-snapshots/Linux_x64/$REV/chrome-linux.zip \
   && unzip chrome.zip \
-  && rm chrome.zip
+  && rm chrome.zip \
+  && find chrome-linux/locales/ -type f -not \(-name 'en*' -or -name 'fr*' \) -delete
 echo "-----> Sizes:"
 cd chrome-linux
-ls -lhaSr 
+ls -lhaSr chrome
 ls -lhaSr locales
 
-echo "-----> Check chromium-linux version"
-$CHROME_DIR/chrome-linux/chrome --version  && echo "-----> Chromium browser OK!" || echo "-----> Chromium browser Error!"
+#echo "-----> Check chromium-linux version"
+#$CHROME_DIR/chrome-linux/chrome --version  && echo "-----> Chromium browser OK!" || echo "-----> Chromium browser Error!"
 
 # echo "-----> Folder occupation in CHROME_DIR:"
 # cd $CHROME_DIR

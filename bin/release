@@ -4,6 +4,6 @@ cat << EOF
 ---
 addons:
 config_vars:
-  PATH: /app/.no_meteor/chrome-linux:$PATH
+  PATH: /app/.extras/chrome-linux:$PATH
 default_process_types:
 EOF
