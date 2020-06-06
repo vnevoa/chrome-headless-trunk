@@ -3,27 +3,26 @@
 BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
+CHROME_DIR="$BUILD_DIR/.no_meteor"
 
+echo "-----> Dependencies warning: this installation depends on several debian packages which are installed via the apt-buildpack Aptfile."
+
+echo "-----> Build Environment:"
 echo "BUILD_DIR = $BUILD_DIR"
 echo "CACHE_DIR = $CACHE_DIR"
 echo "ENV_DIR = $ENV_DIR"
-
-echo "-----> Dependencies warning: this installation depends on several debian packages which are installed via the apt-buildpack/Aptfile."
+echo "CHROME_DIR = $CHROME_DIR"
 
 echo "-----> Install chromium-linux"
-cd $BUILD_DIR
+mkdir -p $CHROME_DIR
+cd $CHROME_DIR
 REV=775629
 wget -q -O chrome.zip https://commondatastorage.googleapis.com/chromium-browser-snapshots/Linux_x64/$REV/chrome-linux.zip \
   && unzip chrome.zip \
-  && rm chrome.zip
+  && rm chrome.zip \
 
 echo "-----> Check chromium-linux version"
-$PWD/chrome-linux/chrome --version
-
-echo "-----> Exporting PATH" | indent
-PROFILE_PATH="$BUILD_DIR/.profile.d/chrome.sh"
-mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="/app/chrome-linux:$PATH"' >> $PROFILE_PATH
+$PWD/chrome-linux/chrome --version  && echo "-----> Chromium browser installed."
 
 # ln -s $PWD/chrome-linux/chrome /usr/bin/google-chrome-unstable
 # cp start.sh /usr/bin/
